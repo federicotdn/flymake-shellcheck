@@ -5,7 +5,7 @@
 ;; Author: Federico Tedin <federicotedin@gmail.com>
 ;; Homepage: https://github.com/federicotdn/flymake-shellcheck
 ;; Package-Version: 0
-;; Package-Requires: ((emacs "25"))
+;; Package-Requires: ((emacs "26"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
