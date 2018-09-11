@@ -1,4 +1,7 @@
 # flymake-shellcheck
+[![Melpa Status](http://melpa.milkbox.net/packages/flymake-shellcheck-badge.svg)](http://melpa.milkbox.net/#/flymake-shellcheck)
+![Melpa Status](https://img.shields.io/github/license/federicotdn/flymake-shellcheck.svg)
+
 An Emacs Flymake handler for bash/sh scripts, using [ShellCheck](https://github.com/koalaman/shellcheck).
 
 ## Installation
