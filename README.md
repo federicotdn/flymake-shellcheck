@@ -15,11 +15,23 @@ Alternatively, you can just add `flymake-shellcheck.el` to your `load-path`.
 To enable the Flymake backend whenever a bash or sh script is visited, add the following to your `init.el` file:
 
 ```el
-(require 'flymake-shellcheck)
 (add-hook 'sh-mode-hook 'flymake-shellcheck-load)
 ```
+
+If you're using [`use-package`](https://github.com/jwiegley/use-package), try this instead:
+
+```el
+(use-package flymake-shellcheck
+  :commands flymake-shellcheck-load
+  :init
+  (add-hook 'sh-mode-hook 'flymake-shellcheck-load))
+```
+
+After opening a shell/sh file, remember to enable Flymake:
+
+<kbd>M-x</kbd> `flymake-mode` <kbd>[RET]</kbd>
 
 ## License
 Copyright © 2018 Federico Tedin.
 
-Distributed under the GNU General Public License, version 3
+Distributed under the GNU General Public License, version 3.
