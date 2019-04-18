@@ -32,6 +32,6 @@ After opening a shell/sh file, remember to enable Flymake:
 <kbd>M-x</kbd> `flymake-mode` <kbd>[RET]</kbd>
 
 ## License
-Copyright © 2018 Federico Tedin.
+Copyright © 2019 Federico Tedin.
 
 Distributed under the GNU General Public License, version 3.
