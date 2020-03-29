@@ -1,6 +1,7 @@
 ;;; flymake-shellcheck.el --- A bash/sh Flymake backend powered by ShellCheck  -*- lexical-binding: t; -*-
 
 ;; Copyright (c) 2018 Federico Tedin
+;; Copyright (c) 2020 Joseph LaFreniere (lafrenierejm) <joseph@lafreniere.xyz>
 
 ;; Author: Federico Tedin <federicotedin@gmail.com>
 ;; Homepage: https://github.com/federicotdn/flymake-shellcheck
