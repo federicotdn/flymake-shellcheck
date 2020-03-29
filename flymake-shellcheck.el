@@ -35,12 +35,18 @@
   :prefix "flymake-shellcheck-"
   :group 'tools)
 
+(defcustom flymake-shellcheck-path
+  (executable-find "shellcheck")
+  "The path to the `shellcheck' executable."
+  :type 'string)
+
 (defvar-local flymake-shellcheck--proc nil)
 
 (defun flymake-shellcheck--backend (report-fn &rest _args)
   "Shellcheck backend for Flymake.  Check for problems, then call REPORT-FN with results."
-  (unless (executable-find
-           "shellcheck") (error "Could not find shellcheck executable"))
+  (unless (and flymake-shellcheck-path
+               (file-executable-p flymake-shellcheck-path))
+    (error "Could not find shellcheck executable"))
 
   (when (process-live-p flymake-shellcheck--proc)
     (kill-process flymake-shellcheck--proc))
@@ -54,7 +60,7 @@
        (make-process
         :name "shellcheck-flymake" :noquery t :connection-type 'pipe
         :buffer (generate-new-buffer " *shellcheck-flymake*")
-        :command (list "shellcheck" "-f" "gcc" filename)
+        :command (list flymake-shellcheck-path "-f" "gcc" filename)
         :sentinel
         (lambda (proc _event)
           (when (eq 'exit (process-status proc))
