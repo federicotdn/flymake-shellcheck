@@ -30,6 +30,11 @@
 
 ;;; Code:
 
+(defgroup flymake-shellcheck nil
+  "Shellcheck backend for Flymake."
+  :prefix "flymake-shellcheck-"
+  :group 'tools)
+
 (defvar-local flymake-shellcheck--proc nil)
 
 (defun flymake-shellcheck--backend (report-fn &rest _args)
