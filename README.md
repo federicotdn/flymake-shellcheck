@@ -33,7 +33,8 @@ After opening a shell/sh file, remember to enable Flymake:
 
 ## Customization
 
-You can set the `flymake-shellcheck-path` variable to the path of the ShellCheck executable in your system, in case `executable-find` wasn't able to find it automatically.
+- You can set the `flymake-shellcheck-path` variable to the path of the ShellCheck executable in your system, in case `executable-find` wasn't able to find it automatically.
+- You can set the `flymake-shellcheck-use-file` variable to `nil` if you wish to run the syntax checker on the contents of the buffer, rather than the contents of the file on disk (default: `t`).
 
 ## License
 

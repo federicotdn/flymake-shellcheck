@@ -41,6 +41,15 @@
   "The path to the `shellcheck' executable."
   :type 'string)
 
+(defcustom flymake-shellcheck-use-file t
+  "When non-nil, send the contents of the file on disk to shellcheck.
+Otherwise, send the contents of the buffer, whether they have been
+saved or not.
+
+Setting this variable to non-nil may yield slightly quicker syntax
+checks on very large files."
+  :type 'boolean)
+
 (defvar-local flymake-shellcheck--proc nil)
 
 (defun flymake-shellcheck--backend (report-fn &rest _args)
@@ -50,10 +59,11 @@
     (error "Could not find shellcheck executable"))
 
   (when (process-live-p flymake-shellcheck--proc)
-    (kill-process flymake-shellcheck--proc))
+    (kill-process flymake-shellcheck--proc)
+    (setq flymake-shellcheck--proc nil))
 
   (let* ((source (current-buffer))
-	 (filename (buffer-file-name source)))
+	     (filename (buffer-file-name source)))
     (save-restriction
       (widen)
       (setq
@@ -61,7 +71,9 @@
        (make-process
         :name "shellcheck-flymake" :noquery t :connection-type 'pipe
         :buffer (generate-new-buffer " *shellcheck-flymake*")
-        :command (list flymake-shellcheck-path "-f" "gcc" filename)
+        :command (list flymake-shellcheck-path
+                       "-f" "gcc"
+                       (if flymake-shellcheck-use-file filename "-"))
         :sentinel
         (lambda (proc _event)
           (when (eq 'exit (process-status proc))
@@ -73,15 +85,15 @@
                        while (search-forward-regexp
                               "^.+?:\\([0-9]+\\):\\([0-9]+\\): \\(.*\\): \\(.*\\)$"
                               nil t)
-		       for severity = (match-string 3)
+		               for severity = (match-string 3)
                        for msg = (match-string 4)
                        for (beg . end) = (flymake-diag-region
                                           source
                                           (string-to-number (match-string 1))
-					  (string-to-number (match-string 2)))
+					                      (string-to-number (match-string 2)))
                        for type = (cond ((string= severity "note") :note)
-					((string= severity "warning") :warning)
-					(t :error))
+					                    ((string= severity "warning") :warning)
+					                    (t :error))
                        collect (flymake-make-diagnostic source
                                                         beg
                                                         end
@@ -91,7 +103,10 @@
                        finally (funcall report-fn diags)))
                   (flymake-log :warning "Canceling obsolete check %s"
                                proc))
-              (kill-buffer (process-buffer proc))))))))))
+              (kill-buffer (process-buffer proc)))))))
+      (unless flymake-shellcheck-use-file
+        (process-send-region flymake-shellcheck--proc (point-min) (point-max))
+        (process-send-eof flymake-shellcheck--proc)))))
 
 ;;;###autoload
 (defun flymake-shellcheck-load ()
