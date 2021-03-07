@@ -35,6 +35,7 @@ After opening a shell/sh file, remember to enable Flymake:
 
 - You can set the `flymake-shellcheck-path` variable to the path of the ShellCheck executable in your system, in case `executable-find` wasn't able to find it automatically.
 - You can set the `flymake-shellcheck-use-file` variable to `nil` if you wish to run the syntax checker on the contents of the buffer, rather than the contents of the file on disk (default: `t`).
+- You can set the `flymake-shellcheck-allow-external-files` variable to `t` if you want to allow shellcheck to read external sources (it adds `-x` as argument, described in [the SC1091 docs](https://github.com/koalaman/shellcheck/wiki/SC1091), default: `nil`).
 
 ## License
 

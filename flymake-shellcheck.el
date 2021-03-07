@@ -50,6 +50,11 @@ Setting this variable to non-nil may yield slightly quicker syntax
 checks on very large files."
   :type 'boolean)
 
+(defcustom flymake-shellcheck-allow-external-files nil
+  "When non-nil, allow shellcheck to source external files with the '-x' parameter.
+Otherwise, external files won't be sourced."
+  :type 'boolean)
+
 (defvar-local flymake-shellcheck--proc nil)
 
 (defun flymake-shellcheck--backend (report-fn &rest _args)
@@ -71,9 +76,10 @@ checks on very large files."
        (make-process
         :name "shellcheck-flymake" :noquery t :connection-type 'pipe
         :buffer (generate-new-buffer " *shellcheck-flymake*")
-        :command (list flymake-shellcheck-path
+        :command (remove nil (list flymake-shellcheck-path
                        "-f" "gcc"
-                       (if flymake-shellcheck-use-file filename "-"))
+                       (if flymake-shellcheck-allow-external-files "-x")
+                       (if flymake-shellcheck-use-file filename "-")))
         :sentinel
         (lambda (proc _event)
           (when (eq 'exit (process-status proc))
