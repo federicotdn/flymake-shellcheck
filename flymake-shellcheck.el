@@ -31,6 +31,8 @@
 
 ;;; Code:
 
+(require 'flymake)
+
 (defgroup flymake-shellcheck nil
   "Shellcheck backend for Flymake."
   :prefix "flymake-shellcheck-"
