@@ -44,7 +44,7 @@
   "The name of the `shellcheck' executable."
   :type 'string)
 
-(defcustom flymake-shellcheck-use-file t
+(defcustom flymake-shellcheck-use-file nil
   "When non-nil, send the contents of the file on disk to shellcheck.
 Otherwise, send the contents of the buffer, whether they have been
 saved or not.
