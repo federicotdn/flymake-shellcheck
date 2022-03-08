@@ -38,12 +38,13 @@
   :prefix "flymake-shellcheck-"
   :group 'tools)
 
-(defcustom flymake-shellcheck-path
-  (executable-find "shellcheck")
-  "The path to the `shellcheck' executable."
+(define-obsolete-variable-alias 'flymake-shellcheck-path 'flymake-shellcheck-program "2022-03-08")
+
+(defcustom flymake-shellcheck-program "shellcheck"
+  "The name of the `shellcheck' executable."
   :type 'string)
 
-(defcustom flymake-shellcheck-use-file t
+(defcustom flymake-shellcheck-use-file nil
   "When non-nil, send the contents of the file on disk to shellcheck.
 Otherwise, send the contents of the buffer, whether they have been
 saved or not.
@@ -60,9 +61,9 @@ Otherwise, external files won't be sourced."
 (defvar-local flymake-shellcheck--proc nil)
 
 (defun flymake-shellcheck--backend (report-fn &rest _args)
-  "Shellcheck backend for Flymake.  Check for problems, then call REPORT-FN with results."
-  (unless (and flymake-shellcheck-path
-               (file-executable-p flymake-shellcheck-path))
+  "Shellcheck backend for Flymake.
+Check for problems, then call REPORT-FN with results."
+  (unless (executable-find flymake-shellcheck-program)
     (error "Could not find shellcheck executable"))
 
   (when (process-live-p flymake-shellcheck--proc)
@@ -78,7 +79,7 @@ Otherwise, external files won't be sourced."
        (make-process
         :name "shellcheck-flymake" :noquery t :connection-type 'pipe
         :buffer (generate-new-buffer " *shellcheck-flymake*")
-        :command (remove nil (list flymake-shellcheck-path
+        :command (remove nil (list flymake-shellcheck-program
                        "-f" "gcc"
                        (if flymake-shellcheck-allow-external-files "-x")
                        (if flymake-shellcheck-use-file filename "-")))
