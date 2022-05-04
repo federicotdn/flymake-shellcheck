@@ -117,10 +117,13 @@ Check for problems, then call REPORT-FN with results."
         (process-send-region flymake-shellcheck--proc (point-min) (point-max))
         (process-send-eof flymake-shellcheck--proc)))))
 
+(defvar sh-shell)
+
 ;;;###autoload
 (defun flymake-shellcheck-load ()
   "Add the Shellcheck backend into Flymake's diagnostic functions list."
-  (add-hook 'flymake-diagnostic-functions 'flymake-shellcheck--backend nil t))
+  (unless (eq sh-shell 'rpm)
+    (add-hook 'flymake-diagnostic-functions 'flymake-shellcheck--backend nil t)))
 
 (provide 'flymake-shellcheck)
 ;;; flymake-shellcheck.el ends here
