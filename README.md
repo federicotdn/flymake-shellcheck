@@ -1,10 +1,10 @@
-# flymake-shellcheck
+# flymake-shellcheck (maintenance mode)
 [![MELPA](https://melpa.org/packages/flymake-shellcheck-badge.svg)](https://melpa.org/#/flymake-shellcheck)
 ![License](https://img.shields.io/github/license/federicotdn/flymake-shellcheck.svg)
 
-An Emacs (26+) Flymake handler for bash/sh scripts, using [ShellCheck](https://github.com/koalaman/shellcheck). Installing Flymake is not necessary as it is included with Emacs itself.
+> **Note:** If you're using Emacs version 29 or higher, installing this package is not necessary, as the Flymake-Shellcheck integration is now built-in into the editor. This project is now in maintenance mode; no new features or enhancements will be made for it, unless they are required for security reasons.
 
-> **Note:** If you're using Emacs version 29 or higher, installing this package is not necessary, as the Flymake-Shellcheck integration is now built-in into the editor.
+An Emacs (26+) Flymake handler for bash/sh scripts, using [ShellCheck](https://github.com/koalaman/shellcheck). Installing Flymake is not necessary as it is included with Emacs itself.
 
 ## Installation
 First, make sure ShellCheck is installed by following [the installation guide](https://github.com/koalaman/shellcheck#installing). After that, you can install `flymake-shellcheck` by using the `package-install` command (make sure [MELPA](https://melpa.org/) is included in your package sources):
